@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PIM training videos and the evolution of reward</title>
+  <style>
+    :root {
+      --bg: #0e1116;
+      --panel: #171c24;
+      --line: #2a3340;
+      --text: #e8edf4;
+      --muted: #8b97a8;
+      --accent: #7eb6ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px 32px;
+      padding: 28px 32px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    p.lede {
+      margin: 12px 0 0;
+      max-width: 52rem;
+      color: #f7f9fc;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+    }
+
+    .def {
+      margin: 22px 32px 0;
+      max-width: 1036px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px;
+      padding: 22px 24px;
+    }
+
+    .def p {
+      margin: 0;
+      color: #f7f9fc;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+    }
+
+    .def p + p { margin-top: 12px; }
+
+    .def var {
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+    }
+
+    button {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    button:hover { border-color: var(--accent); color: var(--accent); }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+      padding: 28px 32px 56px;
+      max-width: 1100px;
+    }
+
+    article {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) 440px;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .notes { padding: 4px 8px 4px 0; }
+
+    .notes h2 {
+      margin: 0;
+      color: var(--accent);
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .statement {
+      margin: 14px 0 0;
+      max-width: 34rem;
+      color: #f7f9fc;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1.32;
+      letter-spacing: -0.02em;
+    }
+
+    figure {
+      margin: 0;
+      background: #000;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 960 / 1120;
+      container-type: inline-size;
+      background: #000;
+    }
+
+    video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      object-fit: fill;
+    }
+
+    .pim {
+      position: absolute;
+      left: 29.2%;
+      top: 56.15%;
+      margin: 0;
+      color: #e8eef4;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 1.67cqw;
+      font-weight: 650;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      pointer-events: none;
+      text-shadow: 0 1px 2px #000;
+    }
+
+    @media (max-width: 860px) {
+      header, main, .def { padding-left: 16px; padding-right: 16px; }
+      .def { margin-left: 16px; margin-right: 16px; }
+      article { grid-template-columns: 1fr; }
+      h1 { font-size: 22px; white-space: normal; }
+      p.lede { font-size: 16px; }
+      .def p, .notes h2, .statement { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>PIM training videos and the evolution of reward</h1>
+      <p class="lede">These videos show how the PIM reward drives goal-directed exploration before the agent has ever succeeded—and without any subgoals or curriculum.</p>
+    </div>
+    <div class="controls">
+      <button id="play" type="button">Play all</button>
+      <button id="pause" type="button">Pause</button>
+      <button id="restart" type="button">Restart</button>
+    </div>
+  </header>
+
+  <aside class="def">
+    <p><var>r</var>(<var>s</var>, <var>a</var>) = log <var>p</var><sub>γ</sub><sup>π</sup>(<var>g</var> | <var>s</var>, <var>a</var>)</p>
+    <p><var>g</var> := (<var>x</var>, <var>y</var>, <var>z</var>) location of the block inside the bucket</p>
+  </aside>
+
+  <main id="list">
+    <article>
+      <div class="notes">
+        <h2>iter 300</h2>
+        <p class="statement">As the agent pushes the block away from the bucket, the reward drops.</p>
+      </div>
+      <figure>
+        <div class="frame">
+          <video src="iter_0000300_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
+          <p class="pim">PIm reward</p>
+        </div>
+      </figure>
+    </article>
+
+    <article>
+      <div class="notes">
+        <h2>iter 400</h2>
+        <p class="statement">Near the end of the episode, pushing the block toward the right edge of the table slightly raises the reward.</p>
+      </div>
+      <figure>
+        <div class="frame">
+          <video src="iter_0000400_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
+          <p class="pim">PIm reward</p>
+        </div>
+      </figure>
+    </article>
+
+    <article>
+      <div class="notes">
+        <h2>iter 500</h2>
+        <p class="statement">The agent still hasn't found a good strategy. It keeps exploring the left side of the table, but sliding the object toward the left decreases the reward.</p>
+      </div>
+      <figure>
+        <div class="frame">
+          <video src="iter_0000500_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
+          <p class="pim">PIm reward</p>
+        </div>
+      </figure>
+    </article>
+
+    <article>
+      <div class="notes">
+        <h2>iter 900</h2>
+        <p class="statement">The agent slides the block toward the right edge of the table and the reward climbs—then falls once the gripper loses contact with the object.</p>
+      </div>
+      <figure>
+        <div class="frame">
+          <video src="iter_0000900_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
+          <p class="pim">PIm reward</p>
+        </div>
+      </figure>
+    </article>
+
+    <article>
+      <div class="notes">
+        <h2>iter 1200</h2>
+        <p class="statement">This is the agent's first try at throwing. The reward peaks just before the throw, then spikes again after the block's z matches the goal z.</p>
+      </div>
+      <figure>
+        <div class="frame">
+          <video src="iter_0001200_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
+          <p class="pim">PIm reward</p>
+        </div>
+      </figure>
+    </article>
+
+    <article>
+      <div class="notes">
+        <h2>iter 1400</h2>
+        <p class="statement">The agent earns high reward for throwing the object next to the bucket, but once the object gets stuck there the reward falls.</p>
+      </div>
+      <figure>
+        <div class="frame">
+          <video src="iter_0001400_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
+          <p class="pim">PIm reward</p>
+        </div>
+      </figure>
+    </article>
+
+    <article>
+      <div class="notes">
+        <h2>iter 1500</h2>
+        <p class="statement">Here the agent almost learns the throwing strategy, but it is not fast enough to finish the task before the end of the episode. Still, it receives high reward because the block ends up very close to the goal.</p>
+      </div>
+      <figure>
+        <div class="frame">
+          <video src="iter_0001500_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
+          <p class="pim">PIm reward</p>
+        </div>
+      </figure>
+    </article>
+
+    <article>
+      <div class="notes">
+        <h2>iter 1900</h2>
+        <p class="statement">Finally, the agent learns to throw the object into the bucket and receives high reward.</p>
+      </div>
+      <figure>
+        <div class="frame">
+          <video src="iter_0001900_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
+          <p class="pim">PIm reward</p>
+        </div>
+      </figure>
+    </article>
+  </main>
+
+  <script>
+    const videos = Array.from(document.querySelectorAll("video"));
+
+    function ready(video) {
+      return video.readyState >= 1 && Number.isFinite(video.duration);
+    }
+
+    function playAll() {
+      for (const video of videos) {
+        const p = video.play();
+        if (p && p.catch) p.catch(() => {});
+      }
+    }
+
+    function pauseAll() {
+      for (const video of videos) video.pause();
+    }
+
+    function restart() {
+      for (const video of videos) {
+        if (ready(video)) video.currentTime = 0;
+      }
+      playAll();
+    }
+
+    let syncing = false;
+    for (const video of videos) {
+      video.addEventListener("seeked", () => {
+        if (syncing || !ready(video)) return;
+        syncing = true;
+        const t = video.currentTime;
+        for (const other of videos) {
+          if (other !== video && ready(other) && Math.abs(other.currentTime - t) > 0.05) {
+            other.currentTime = t;
+          }
+        }
+        syncing = false;
+      });
+    }
+
+    document.getElementById("play").addEventListener("click", playAll);
+    document.getElementById("pause").addEventListener("click", pauseAll);
+    document.getElementById("restart").addEventListener("click", restart);
+  </script>
+</body>
+</html>
