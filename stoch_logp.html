@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PIM training videos and the evolution of reward</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <style>
     :root {
       --bg: #0e1116;
@@ -109,7 +110,7 @@
 
     article {
       display: grid;
-      grid-template-columns: minmax(280px, 1fr) 440px;
+      grid-template-columns: minmax(260px, 1fr) minmax(320px, 480px);
       gap: 36px;
       align-items: center;
     }
@@ -135,19 +136,27 @@
     }
 
     figure {
+      position: relative;
       margin: 0;
+      display: grid;
+      grid-template-columns: 6.8rem minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      column-gap: 4px;
+      row-gap: 10px;
+      align-items: stretch;
+      background: transparent;
+    }
+
+    .frame {
+      grid-column: 2;
+      grid-row: 1;
+      position: relative;
+      width: 100%;
+      aspect-ratio: 960 / 1120;
       background: #000;
       border: 1px solid var(--line);
       border-radius: 12px;
       overflow: hidden;
-    }
-
-    .frame {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 960 / 1120;
-      container-type: inline-size;
-      background: #000;
     }
 
     video {
@@ -158,20 +167,47 @@
       object-fit: fill;
     }
 
-    .pim {
+    .def .katex {
+      font-size: 1.15em;
+      color: #f7f9fc;
+    }
+
+    .axis-y {
+      grid-column: 1;
+      grid-row: 1;
       position: absolute;
-      left: 29.2%;
-      top: 56.15%;
+      left: -2.1rem;
+      top: 42%;
+      bottom: 6%;
+      width: 6.8rem;
       margin: 0;
-      color: #e8eef4;
-      font-family: ui-sans-serif, system-ui, sans-serif;
-      font-size: 1.67cqw;
-      font-weight: 650;
-      line-height: 1;
-      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f4f7fb;
+      overflow: visible;
+      z-index: 1;
+    }
+
+    .axis-y .katex {
       white-space: nowrap;
-      pointer-events: none;
-      text-shadow: 0 1px 2px #000;
+      font-size: 1.55em;
+      color: #f4f7fb;
+      transform: rotate(-90deg);
+      transform-origin: center center;
+    }
+
+    .axis-x {
+      grid-column: 2;
+      grid-row: 2;
+      margin: 0;
+      color: #f4f7fb;
+      text-align: center;
+    }
+
+    .axis-x .katex {
+      font-size: 1.85em;
+      color: #f4f7fb;
     }
 
     @media (max-width: 860px) {
@@ -181,6 +217,8 @@
       h1 { font-size: 22px; white-space: normal; }
       p.lede { font-size: 16px; }
       .def p, .notes h2, .statement { font-size: 22px; }
+      .axis-y .katex { font-size: 1.3em; }
+      .axis-x .katex { font-size: 1.55em; }
     }
   </style>
 </head>
@@ -198,8 +236,8 @@
   </header>
 
   <aside class="def">
-    <p><var>r</var>(<var>s</var>, <var>a</var>) = log <var>p</var><sub>γ</sub><sup>π</sup>(<var>g</var> | <var>s</var>, <var>a</var>)</p>
-    <p><var>g</var> := (<var>x</var>, <var>y</var>, <var>z</var>) location of the block inside the bucket</p>
+    <p>\(r(s_t, a_t) = \log p_{\gamma}^{\pi}(g \mid s_t, a_t)\)</p>
+    <p>\(g := (x, y, z)\) location of the block inside the bucket</p>
   </aside>
 
   <main id="list">
@@ -209,10 +247,11 @@
         <p class="statement">As the agent pushes the block away from the bucket, the reward drops.</p>
       </div>
       <figure>
+        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
         <div class="frame">
           <video src="iter_0000300_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
-          <p class="pim">PIm reward</p>
         </div>
+        <p class="axis-x">\(t\)</p>
       </figure>
     </article>
 
@@ -222,10 +261,11 @@
         <p class="statement">Near the end of the episode, pushing the block toward the right edge of the table slightly raises the reward.</p>
       </div>
       <figure>
+        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
         <div class="frame">
           <video src="iter_0000400_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
-          <p class="pim">PIm reward</p>
         </div>
+        <p class="axis-x">\(t\)</p>
       </figure>
     </article>
 
@@ -235,10 +275,11 @@
         <p class="statement">The agent still hasn't found a good strategy. It keeps exploring the left side of the table, but sliding the object toward the left decreases the reward.</p>
       </div>
       <figure>
+        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
         <div class="frame">
           <video src="iter_0000500_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
-          <p class="pim">PIm reward</p>
         </div>
+        <p class="axis-x">\(t\)</p>
       </figure>
     </article>
 
@@ -248,10 +289,11 @@
         <p class="statement">The agent slides the block toward the right edge of the table and the reward climbs—then falls once the gripper loses contact with the object.</p>
       </div>
       <figure>
+        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
         <div class="frame">
           <video src="iter_0000900_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
-          <p class="pim">PIm reward</p>
         </div>
+        <p class="axis-x">\(t\)</p>
       </figure>
     </article>
 
@@ -261,10 +303,11 @@
         <p class="statement">This is the agent's first try at throwing. The reward peaks just before the throw, then spikes again after the block's z matches the goal z.</p>
       </div>
       <figure>
+        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
         <div class="frame">
           <video src="iter_0001200_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
-          <p class="pim">PIm reward</p>
         </div>
+        <p class="axis-x">\(t\)</p>
       </figure>
     </article>
 
@@ -274,10 +317,11 @@
         <p class="statement">The agent earns high reward for throwing the object next to the bucket, but once the object gets stuck there the reward falls.</p>
       </div>
       <figure>
+        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
         <div class="frame">
           <video src="iter_0001400_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
-          <p class="pim">PIm reward</p>
         </div>
+        <p class="axis-x">\(t\)</p>
       </figure>
     </article>
 
@@ -287,10 +331,11 @@
         <p class="statement">Here the agent almost learns the throwing strategy, but it is not fast enough to finish the task before the end of the episode. Still, it receives high reward because the block ends up very close to the goal.</p>
       </div>
       <figure>
+        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
         <div class="frame">
           <video src="iter_0001500_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
-          <p class="pim">PIm reward</p>
         </div>
+        <p class="axis-x">\(t\)</p>
       </figure>
     </article>
 
@@ -300,10 +345,11 @@
         <p class="statement">Finally, the agent learns to throw the object into the bucket and receives high reward.</p>
       </div>
       <figure>
+        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
         <div class="frame">
           <video src="iter_0001900_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
-          <p class="pim">PIm reward</p>
         </div>
+        <p class="axis-x">\(t\)</p>
       </figure>
     </article>
   </main>
@@ -352,5 +398,8 @@
     document.getElementById("pause").addEventListener("click", pauseAll);
     document.getElementById("restart").addEventListener("click", restart);
   </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters:[{left:'\\(', right:'\\)', display:false},{left:'$$', right:'$$', display:true}]});"></script>
 </body>
 </html>
