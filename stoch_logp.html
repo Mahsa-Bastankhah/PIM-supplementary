@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PIM training videos and the evolution of reward</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <style>
     :root {
       --bg: #0e1116;
@@ -167,9 +166,28 @@
       object-fit: fill;
     }
 
-    .def .katex {
-      font-size: 1.15em;
-      color: #f7f9fc;
+    .math {
+      font-family: "Times New Roman", Times, "Liberation Serif", serif;
+      font-style: italic;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .math .op {
+      font-style: normal;
+      font-family: "Times New Roman", Times, "Liberation Serif", serif;
+      margin-right: 0.12em;
+    }
+
+    .math sub,
+    .math sup {
+      font-size: 0.68em;
+      font-style: italic;
+      line-height: 0;
+    }
+
+    .math .plain {
+      font-style: normal;
     }
 
     .axis-y {
@@ -189,9 +207,8 @@
       z-index: 1;
     }
 
-    .axis-y .katex {
-      white-space: nowrap;
-      font-size: 1.55em;
+    .axis-y .math {
+      font-size: 24px;
       color: #f4f7fb;
       transform: rotate(-90deg);
       transform-origin: center center;
@@ -205,9 +222,14 @@
       text-align: center;
     }
 
-    .axis-x .katex {
-      font-size: 1.85em;
+    .axis-x .math {
+      font-size: 30px;
       color: #f4f7fb;
+    }
+
+    .def .math {
+      font-size: 1.05em;
+      color: #f7f9fc;
     }
 
     @media (max-width: 860px) {
@@ -217,8 +239,8 @@
       h1 { font-size: 22px; white-space: normal; }
       p.lede { font-size: 16px; }
       .def p, .notes h2, .statement { font-size: 22px; }
-      .axis-y .katex { font-size: 1.3em; }
-      .axis-x .katex { font-size: 1.55em; }
+      .axis-y .math { font-size: 20px; }
+      .axis-x .math { font-size: 26px; }
     }
   </style>
 </head>
@@ -236,8 +258,8 @@
   </header>
 
   <aside class="def">
-    <p>\(r(s_t, a_t) = \log p_{\gamma}^{\pi}(g \mid s_t, a_t)\)</p>
-    <p>\(g := (x, y, z)\) location of the block inside the bucket</p>
+    <p><span class="math">r(s<sub>t</sub>,&thinsp;a<sub>t</sub>)&nbsp;=&nbsp;<span class="op">log</span>&thinsp;p<sub>&gamma;</sub><sup>&pi;</sup>(g&nbsp;|&nbsp;s<sub>t</sub>,&thinsp;a<sub>t</sub>)</span></p>
+    <p><span class="math">g&nbsp;:=&nbsp;(x,&thinsp;y,&thinsp;z)</span> location of the block inside the bucket</p>
   </aside>
 
   <main id="list">
@@ -247,11 +269,11 @@
         <p class="statement">As the agent pushes the block away from the bucket, the reward drops.</p>
       </div>
       <figure>
-        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
+        <p class="axis-y"><span class="math"><span class="op">log</span>&thinsp;p<sub>&gamma;</sub><sup>&pi;</sup>(g&nbsp;|&nbsp;s<sub>t</sub>,&thinsp;a<sub>t</sub>)</span></p>
         <div class="frame">
           <video src="iter_0000300_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
         </div>
-        <p class="axis-x">\(t\)</p>
+        <p class="axis-x"><span class="math">t</span></p>
       </figure>
     </article>
 
@@ -261,11 +283,11 @@
         <p class="statement">Near the end of the episode, pushing the block toward the right edge of the table slightly raises the reward.</p>
       </div>
       <figure>
-        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
+        <p class="axis-y"><span class="math"><span class="op">log</span>&thinsp;p<sub>&gamma;</sub><sup>&pi;</sup>(g&nbsp;|&nbsp;s<sub>t</sub>,&thinsp;a<sub>t</sub>)</span></p>
         <div class="frame">
           <video src="iter_0000400_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
         </div>
-        <p class="axis-x">\(t\)</p>
+        <p class="axis-x"><span class="math">t</span></p>
       </figure>
     </article>
 
@@ -275,11 +297,11 @@
         <p class="statement">The agent still hasn't found a good strategy. It keeps exploring the left side of the table, but sliding the object toward the left decreases the reward.</p>
       </div>
       <figure>
-        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
+        <p class="axis-y"><span class="math"><span class="op">log</span>&thinsp;p<sub>&gamma;</sub><sup>&pi;</sup>(g&nbsp;|&nbsp;s<sub>t</sub>,&thinsp;a<sub>t</sub>)</span></p>
         <div class="frame">
           <video src="iter_0000500_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
         </div>
-        <p class="axis-x">\(t\)</p>
+        <p class="axis-x"><span class="math">t</span></p>
       </figure>
     </article>
 
@@ -289,11 +311,11 @@
         <p class="statement">The agent slides the block toward the right edge of the table and the reward climbs—then falls once the gripper loses contact with the object.</p>
       </div>
       <figure>
-        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
+        <p class="axis-y"><span class="math"><span class="op">log</span>&thinsp;p<sub>&gamma;</sub><sup>&pi;</sup>(g&nbsp;|&nbsp;s<sub>t</sub>,&thinsp;a<sub>t</sub>)</span></p>
         <div class="frame">
           <video src="iter_0000900_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
         </div>
-        <p class="axis-x">\(t\)</p>
+        <p class="axis-x"><span class="math">t</span></p>
       </figure>
     </article>
 
@@ -303,11 +325,11 @@
         <p class="statement">This is the agent's first try at throwing. The reward peaks just before the throw, then spikes again after the block's z matches the goal z.</p>
       </div>
       <figure>
-        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
+        <p class="axis-y"><span class="math"><span class="op">log</span>&thinsp;p<sub>&gamma;</sub><sup>&pi;</sup>(g&nbsp;|&nbsp;s<sub>t</sub>,&thinsp;a<sub>t</sub>)</span></p>
         <div class="frame">
           <video src="iter_0001200_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
         </div>
-        <p class="axis-x">\(t\)</p>
+        <p class="axis-x"><span class="math">t</span></p>
       </figure>
     </article>
 
@@ -317,11 +339,11 @@
         <p class="statement">The agent earns high reward for throwing the object next to the bucket, but once the object gets stuck there the reward falls.</p>
       </div>
       <figure>
-        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
+        <p class="axis-y"><span class="math"><span class="op">log</span>&thinsp;p<sub>&gamma;</sub><sup>&pi;</sup>(g&nbsp;|&nbsp;s<sub>t</sub>,&thinsp;a<sub>t</sub>)</span></p>
         <div class="frame">
           <video src="iter_0001400_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
         </div>
-        <p class="axis-x">\(t\)</p>
+        <p class="axis-x"><span class="math">t</span></p>
       </figure>
     </article>
 
@@ -331,11 +353,11 @@
         <p class="statement">Here the agent almost learns the throwing strategy, but it is not fast enough to finish the task before the end of the episode. Still, it receives high reward because the block ends up very close to the goal.</p>
       </div>
       <figure>
-        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
+        <p class="axis-y"><span class="math"><span class="op">log</span>&thinsp;p<sub>&gamma;</sub><sup>&pi;</sup>(g&nbsp;|&nbsp;s<sub>t</sub>,&thinsp;a<sub>t</sub>)</span></p>
         <div class="frame">
           <video src="iter_0001500_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
         </div>
-        <p class="axis-x">\(t\)</p>
+        <p class="axis-x"><span class="math">t</span></p>
       </figure>
     </article>
 
@@ -345,11 +367,11 @@
         <p class="statement">Finally, the agent learns to throw the object into the bucket and receives high reward.</p>
       </div>
       <figure>
-        <p class="axis-y">\(\log p_{\gamma}^{\pi}(g\mid s_t,a_t)\)</p>
+        <p class="axis-y"><span class="math"><span class="op">log</span>&thinsp;p<sub>&gamma;</sub><sup>&pi;</sup>(g&nbsp;|&nbsp;s<sub>t</sub>,&thinsp;a<sub>t</sub>)</span></p>
         <div class="frame">
           <video src="iter_0001900_stoch_logp.mp4" muted loop playsinline preload="metadata" controls></video>
         </div>
-        <p class="axis-x">\(t\)</p>
+        <p class="axis-x"><span class="math">t</span></p>
       </figure>
     </article>
   </main>
@@ -398,8 +420,5 @@
     document.getElementById("pause").addEventListener("click", pauseAll);
     document.getElementById("restart").addEventListener("click", restart);
   </script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
-    onload="renderMathInElement(document.body, {delimiters:[{left:'\\(', right:'\\)', display:false},{left:'$$', right:'$$', display:true}]});"></script>
 </body>
 </html>
