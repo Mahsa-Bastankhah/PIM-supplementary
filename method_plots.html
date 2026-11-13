@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Do gradient regularizer and goal normalization improve the performance of the best baselines?</title>
+  <style>
+    :root {
+      --bg: #0f1218;
+      --panel: #171c24;
+      --line: #2a3340;
+      --text: #e8edf4;
+      --muted: #8b97a8;
+      --accent: #7eb6ff;
+      --plot-w: 380px;
+      --plot-h: 270px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    }
+
+    header {
+      padding: 40px 48px 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      white-space: nowrap;
+    }
+
+    main {
+      display: block;
+      padding: 40px 48px 64px;
+      max-width: 1560px;
+    }
+
+    section.method {
+      display: table;
+      width: 100%;
+      margin: 0 0 44px;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    section.method:last-child {
+      margin-bottom: 0;
+    }
+
+    .method-label,
+    .plots {
+      display: table-cell;
+      vertical-align: top;
+    }
+
+    .method-label {
+      width: 160px;
+      padding-top: 12px;
+      padding-right: 28px;
+    }
+
+    .method-label h2 {
+      margin: 0;
+      color: var(--accent);
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .plots {
+      font-size: 0;
+    }
+
+    figure {
+      display: inline-block;
+      vertical-align: top;
+      width: var(--plot-w);
+      margin: 0 20px 20px 0;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      font-size: 12px;
+    }
+
+    figure img {
+      display: block;
+      width: var(--plot-w);
+      height: var(--plot-h);
+      object-fit: contain;
+      background: #fff;
+    }
+
+    figcaption {
+      display: block;
+      padding: 10px 12px;
+      background: var(--panel);
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    @media (max-width: 1100px) {
+      h1 {
+        font-size: 26px;
+        white-space: normal;
+      }
+    }
+
+    @media (max-width: 720px) {
+      header, main { padding: 24px 16px 40px; }
+      .method-label,
+      .plots {
+        display: block;
+        width: auto;
+      }
+      .method-label { padding: 0 0 14px; }
+      figure,
+      figure img {
+        width: 100%;
+        max-width: 420px;
+      }
+      figure img { height: auto; aspect-ratio: 2580 / 1836; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Do gradient regularizer and goal normalization improve the performance of the best baselines?</h1>
+  </header>
+
+  <main>
+    <section class="method">
+      <div class="method-label"><h2>RND</h2></div>
+      <div class="plots">
+        <figure>
+          <img src="rnd_c3t1.png" width="2580" height="1836" alt="RND 3-cube stacking">
+          <figcaption>rnd_c3t1 · 3-cube stacking</figcaption>
+        </figure>
+        <figure>
+          <img src="rnd_c4t1.png" width="2580" height="1836" alt="RND 4-cube stacking">
+          <figcaption>rnd_c4t1 · 4-cube stacking</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="method">
+      <div class="method-label"><h2>SGCRL</h2></div>
+      <div class="plots">
+        <figure>
+          <img src="sgcrl_c4t1.png" width="2580" height="1836" alt="SGCRL 4-cube stacking">
+          <figcaption>sgcrl_c4t1 · 4-cube stacking</figcaption>
+        </figure>
+        <figure>
+          <img src="sgcrl_c7t2.png" width="2580" height="1836" alt="SGCRL 7-cube zig-zag tower">
+          <figcaption>sgcrl_c7t2 · 7-cube zig-zag tower</figcaption>
+        </figure>
+        <figure>
+          <img src="sgcrl_c8t2.png" width="2580" height="1836" alt="SGCRL 8-cube Jenga tower">
+          <figcaption>sgcrl_c8t2 · 8-cube Jenga tower</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="method">
+      <div class="method-label"><h2>DISCOVER</h2></div>
+      <div class="plots">
+        <figure>
+          <img src="discover_c3t1.png" width="2580" height="1836" alt="DISCOVER 3-cube stacking">
+          <figcaption>discover_c3t1 · 3-cube stacking</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
