@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PIM solving the task with pixel-based observations</title>
+  <style>
+    :root {
+      --bg: #0f1218;
+      --panel: #171c24;
+      --line: #2a3340;
+      --text: #f2f5fa;
+      --muted: #9aa6b8;
+      --accent: #7eb6ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    }
+
+    header {
+      padding: 44px 48px 30px;
+      border-bottom: 1px solid var(--line);
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0 auto;
+      max-width: 52rem;
+      font-size: 40px;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+    }
+
+    p.desc {
+      margin: 18px auto 0;
+      max-width: 44rem;
+      color: var(--text);
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: -0.015em;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 44px 48px 72px;
+    }
+
+    section.task {
+      margin: 0 0 40px;
+      padding: 32px 36px;
+      width: fit-content;
+      max-width: 100%;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    section.task:last-child { margin-bottom: 0; }
+
+    .task h2 {
+      margin: 0 0 24px;
+      color: var(--accent);
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      text-align: center;
+    }
+
+    .media {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 32px;
+      width: fit-content;
+      max-width: 100%;
+    }
+
+    .cell {
+      flex: 0 0 auto;
+    }
+
+    .label {
+      margin: 0 0 12px;
+      color: #f2f5fa;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .frame,
+    .clip {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .frame {
+      width: 200px;
+      background: #fff;
+    }
+
+    .frame img {
+      display: block;
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      background: #fff;
+      image-rendering: pixelated;
+    }
+
+    .clip {
+      width: 380px;
+      background: #000;
+    }
+
+    .clip video {
+      display: block;
+      width: 380px;
+      height: 380px;
+      background: #000;
+      object-fit: contain;
+    }
+
+    @media (max-width: 800px) {
+      header, main { padding-left: 18px; padding-right: 18px; }
+      h1 { font-size: 30px; }
+      p.desc { font-size: 20px; }
+      .task h2 { font-size: 26px; }
+      .label { font-size: 18px; }
+      .frame,
+      .frame img {
+        width: 180px;
+        height: 180px;
+      }
+      .clip,
+      .clip video {
+        width: min(360px, 100%);
+        height: auto;
+        aspect-ratio: 1 / 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PIM solving the task with pixel-based observations</h1>
+    <p class="desc">The agent should move the green object to touch the blue object without touching the red object.</p>
+  </header>
+
+  <main>
+    <section class="task">
+      <h2>Thruster</h2>
+      <div class="media">
+        <div class="cell goal">
+          <p class="label">Goal frame</p>
+          <figure class="frame">
+            <img src="thruster_goal.png" width="256" height="256" alt="Thruster goal frame">
+          </figure>
+        </div>
+        <div class="cell rollout">
+          <p class="label">Rollout</p>
+          <figure class="clip">
+            <video src="iter_0000750_stoch_nodist.mp4" controls muted loop playsinline preload="metadata"></video>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="task">
+      <h2>Cart wheel</h2>
+      <div class="media">
+        <div class="cell goal">
+          <p class="label">Goal frame</p>
+          <figure class="frame">
+            <img src="wheel_cart_goal.png" width="256" height="256" alt="Cart wheel goal frame">
+          </figure>
+        </div>
+        <div class="cell rollout">
+          <p class="label">Rollout</p>
+          <figure class="clip">
+            <video src="iter_0000300_det_nodist.mp4" controls muted loop playsinline preload="metadata"></video>
+          </figure>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
